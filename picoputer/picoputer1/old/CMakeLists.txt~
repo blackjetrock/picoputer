@@ -1,0 +1,18 @@
+cmake_minimum_required(VERSION 3.13)
+
+include(pico_sdk_import.cmake)
+include(pico_extras_import.cmake)
+
+project(picoputer1)
+
+pico_sdk_init()
+
+add_executable(picoputer1
+picoputer1.c	
+)	
+
+pico_enable_stdio_usb(picoputer1 1)
+
+pico_enable_stdio_uart(picoputer1 1)
+pico_add_extra_outputs(picoputer1)
+target_link_libraries(picoputer1 pico_stdlib pico_sd_card)

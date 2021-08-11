@@ -1,0 +1,182 @@
+; Picoputer PIO programs
+;
+; We need a 5MHz clock for the C011 version when talking to the 
+; Arduino Mega attached to it.
+;
+; Ordinarily, we use the system clock when two Picos are connected together
+;
+
+;--------------------------------------------------------------------------------
+; C011 Clock
+;--------------------------------------------------------------------------------
+;
+
+; SET pin 0 should be mapped to the GPIO that drives the C011 clock pin.
+
+.program picoputerclk
+    set pindirs, 1   ; Set pin to output
+
+.wrap_target
+    set pins, 1      ; Drive pin high
+    set pins, 0      ; Drive pin low
+ .wrap
+
+% c-sdk {
+// this is a raw helper function for use by the user which sets up the GPIO output, and configures the SM to output on a particular pin
+
+void picoputerclk_program_init(PIO pio, uint sm, uint offset, uint pin) {
+   pio_gpio_init(pio, pin);
+   pio_sm_set_consecutive_pindirs(pio, sm, pin, 1, true);
+   pio_sm_config c = picoputerclk_program_get_default_config(offset);
+   sm_config_set_set_pins(&c, pin, 1);
+
+  float div = (float)clock_get_hz(clk_sys) / 10000000.0;
+  sm_config_set_clkdiv(&c, div);
+
+   pio_sm_init(pio, sm, offset, &c);
+
+    pio_sm_set_enabled(pio, sm, true);
+}
+%}
+
+;--------------------------------------------------------------------------------
+; Link Out
+;--------------------------------------------------------------------------------
+;
+; Packets are:
+;
+; ACK:   10
+; Data:  11XXXXXXXX0
+;
+; Clock is nominally 10MHz, 20Mhz for faster links
+;
+
+.program picoputerlinkout
+
+.side_set 1 opt
+
+; Data is inverted by level shifter
+; We shift out 10 bits (start bit is hard coded, this allows the sending code to send
+; either a data packet, or an ACK packet
+	
+    nop        side 1
+stopidle:
+
+    pull       side 1 [7]  ; Assert stop bit, or stall with line in idle state
+    set x, 9   side 0 [7]  ; Assert first start bit for 8 clocks
+
+bitloop:                   ; This loop will run 8 times (8n1 UART)
+    out pins, 1            ; Shift 1 bit from OSR to the first OUT pin
+    jmp x-- bitloop   [6]  ; Each loop iteration is 8 cycles.
+    jmp stopidle      [7]	   ; Send stop bit and/or idle state
+
+% c-sdk {
+#include "hardware/clocks.h"
+
+static inline void picoputerlinkout_program_init(PIO pio, uint sm, uint offset, uint pin_linkout) {
+    // Tell PIO to initially drive output-high on the selected pin, then map PIO
+    // onto that pin with the IO muxes.
+    pio_sm_set_pins_with_mask(pio, sm, 0u << pin_linkout, 0u << pin_linkout);
+    pio_sm_set_pindirs_with_mask(pio, sm, 1u << pin_linkout, 1u << pin_linkout);
+    pio_gpio_init(pio, pin_linkout);
+
+    pio_sm_config c = picoputerlinkout_program_get_default_config(offset);
+
+    // OUT shifts to right, no autopull
+    sm_config_set_out_shift(&c, true, false, 32);
+
+    // We are mapping both OUT and side-set to the same pin, because sometimes
+    // we need to assert user data onto the pin (with OUT) and sometimes
+    // assert constant values (start/stop bit)
+    sm_config_set_out_pins(&c, pin_linkout, 1);
+    sm_config_set_sideset_pins(&c, pin_linkout);
+
+    // We only need TX, so get an 8-deep FIFO!
+    // sm_config_set_fifo_join(&c, PIO_FIFO_JOIN_TX);
+
+    // SM transmits 1 bit per 8 execution cycles. We therefore use a
+    // clock of 80MHz
+    float div = (float)clock_get_hz(clk_sys) / 80000000;
+    sm_config_set_clkdiv(&c, div);
+
+    pio_sm_init(pio, sm, offset, &c);
+    pio_sm_set_enabled(pio, sm, true);
+}
+
+// Sends an 11 bit packet to the link out pin
+// The 11 pin packet is used so we can send both data packets and ACK packets
+//
+void picoputerlinkout_program_putc(PIO pio, uint sm, int c)
+{
+  pio_sm_put_blocking(pio, sm, (uint32_t)c);
+}
+
+
+%}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// LinkIn
+//
+////////////////////////////////////////////////////////////////////////////////
+
+.program picoputerlinkin
+
+; IN pin 0 and JMP pin are both mapped to the GPIO used as linkin.
+
+start:
+    wait 0 pin 0        ; Stall until start bit is asserted
+    set x, 9    [10]    ; Preload bit counter, then delay until halfway through the second bit
+
+; Shift the next 10 bits in, the client can work out what sort of packet this is
+
+bitloop:                ; the first data bit (12 cycles incl wait, set).
+    in pins, 1          ; Shift data bit into ISR
+    jmp x-- bitloop [6] ; Loop 8 times, each loop iteration is 8 cycles
+			;    jmp pin good_stop   ; Check stop bit (should be high)
+
+			;    irq 4 rel           ; Either a framing error or a break. Set a sticky flag,
+			;wait 1 pin 0        ; and wait for line to return to idle state.
+			;jmp start           ; Don't push data if we didn't see good framing.
+
+good_stop:              ; No delay before returning to start; a little slack is
+    push                ; important in case the TX clock is slightly too fast.
+
+
+% c-sdk {
+static inline void picoputerlinkin_program_init(PIO pio, uint sm, uint offset, uint pin) {
+    pio_sm_set_consecutive_pindirs(pio, sm, pin, 1, false);
+    pio_gpio_init(pio, pin);
+    gpio_pull_up(pin);
+
+    pio_sm_config c = picoputerlinkin_program_get_default_config(offset);
+    sm_config_set_in_pins(&c, pin); // for WAIT, IN
+    sm_config_set_jmp_pin(&c, pin); // for JMP
+
+    // Shift to right, autopull disabled
+    sm_config_set_in_shift(&c, true, false, 32);
+
+    // SM transmits 1 bit per 8 execution cycles.
+    float div = (float)clock_get_hz(clk_sys) / 80000000;
+    sm_config_set_clkdiv(&c, div);
+    
+    pio_sm_init(pio, sm, offset, &c);
+    pio_sm_set_enabled(pio, sm, true);
+}
+
+ uint32_t picoputerlinkin_get(PIO pio, uint sm)
+{
+  // read entire FIFO word
+  io_rw_32 *rxfifo_shift = (io_rw_32*)&pio->rxf[sm];
+  if (pio_sm_is_rx_fifo_empty(pio, sm))
+    {
+      // 0 indicates no data
+      return 0;
+    }
+
+  // Set LSB to indicate data present
+  return ((uint32_t)*rxfifo_shift) | 1;
+}
+
+%}

@@ -1,0 +1,3 @@
+/tree/downloaded_tools/pico/picoputer1/build/pioasm/CMakeFiles/rebuild_cache.dir
+/tree/downloaded_tools/pico/picoputer1/build/pioasm/CMakeFiles/edit_cache.dir
+/tree/downloaded_tools/pico/picoputer1/build/pioasm/CMakeFiles/pioasm.dir
