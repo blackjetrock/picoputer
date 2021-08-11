@@ -1,1 +1,0 @@
-cmd='/usr/local/bin/cmake;-GEclipse CDT4 - Unix Makefiles;<SOURCE_DIR><SOURCE_SUBDIR>'
