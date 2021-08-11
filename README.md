@@ -21,3 +21,6 @@ You could probably bypass all the IMSC011 stuff and attach the server program to
 You could use the PIO link code and program the Pico natively in C if you wanted the full speed of the Pico, but I wanted to program in Occam.
 
 Once more:  This code is very messy, full of warnings and probably bugs.
+
+picoputer and picoputer-eclipse are the directories that build the picoputer code in eclipse. They need to be at the same level as the RP Pico SDK and examples directories for them to build correctly.
+
