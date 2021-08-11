@@ -24,3 +24,29 @@ Once more:  This code is very messy, full of warnings and probably bugs.
 
 picoputer and picoputer-eclipse are the directories that build the picoputer code in eclipse. They need to be at the same level as the RP Pico SDK and examples directories for them to build correctly.
 
+
+ard-link-monitor.ino
+--------------------
+
+This program is for an Arduino Mega. I used a Mega embedded, but that was because i had one and it fits nicely on 0.1" perfboard. It's a standard Arduino program so should run on any Mega.
+
+
+ardlink-server
+--------------
+
+This is a standard C program that at the moment is only capable of sending the boot file and responding to a subset of SP protocol commands. (Just enough to run the examples).
+
+To build it:
+
+./m
+
+
+Example command line:
+sudo ./ardlink-server -d /dev/ttyUSB0 -b SIMPLE.BTL
+
+This sends the SIMPLE.BTL boot file to the picoputer which will then run it.  SIMPLE.BTL is the compiled simple.occ program. I compile dthis using the geekdot SDK.
+
+
+
+
+
