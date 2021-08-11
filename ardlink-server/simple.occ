@@ -1,0 +1,17 @@
+#INCLUDE "hostio.inc"  -- contains SP protocol
+PROC simple (CHAN OF SP fs, ts)
+  #USE "hostio.lib"
+  [1000]BYTE buffer :
+  BYTE result:
+  INT length:
+  SEQ
+    so.write.string    (fs, ts,
+                            "Please type your name :")
+    so.read.echo.line  (fs, ts, length, buffer, result)
+    so.write.nl        (fs, ts)
+    so.write.string    (fs, ts, "Hello ")
+    so.write.string.nl (fs, ts,
+                             [buffer FROM 0 FOR length])
+    so.exit            (fs, ts, sps.success)
+:
+

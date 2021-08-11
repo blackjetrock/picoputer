@@ -1,0 +1,564 @@
+
+IPtr=80000099, Instruction=44, OReg=80000014, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=8000009A, Instruction=E0, OReg=       0, AReg=80000014, BReg=80000000, CReg=       1, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=8000009B, Instruction=24, OReg=       4, AReg=       1, BReg=80000000, CReg=       1, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=8000009C, Instruction=F2, OReg=      42, AReg=       1, BReg=80000000, CReg=       1, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=8000009D, Instruction=67, OReg=       7, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=8000009E, Instruction=20, OReg=FFFFFF80, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=8000009F, Instruction=20, OReg=FFFFF800, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000A0, Instruction=20, OReg=FFFF8000, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000A1, Instruction=20, OReg=FFF80000, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000A2, Instruction=20, OReg=FF800000, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000A3, Instruction=21, OReg=F8000001, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000A4, Instruction=40, OReg=80000010, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000A5, Instruction=E0, OReg=       0, AReg=80000010, BReg=80000000, CReg=       1, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000A6, Instruction=24, OReg=       4, AReg=       1, BReg=80000000, CReg=       1, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000A7, Instruction=F2, OReg=      42, AReg=       1, BReg=80000000, CReg=       1, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000A8, Instruction=67, OReg=       7, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000A9, Instruction=20, OReg=FFFFFF80, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000AA, Instruction=20, OReg=FFFFF800, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000AB, Instruction=20, OReg=FFFF8000, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000AC, Instruction=20, OReg=FFF80000, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000AD, Instruction=20, OReg=FF800000, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000AE, Instruction=20, OReg=F8000000, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000AF, Instruction=4C, OReg=8000000C, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000B0, Instruction=E0, OReg=       0, AReg=8000000C, BReg=80000000, CReg=       1, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000B1, Instruction=24, OReg=       4, AReg=       1, BReg=80000000, CReg=       1, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000B2, Instruction=F2, OReg=      42, AReg=       1, BReg=80000000, CReg=       1, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000B3, Instruction=67, OReg=       7, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000B4, Instruction=20, OReg=FFFFFF80, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000B5, Instruction=20, OReg=FFFFF800, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000B6, Instruction=20, OReg=FFFF8000, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000B7, Instruction=20, OReg=FFF80000, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000B8, Instruction=20, OReg=FF800000, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000B9, Instruction=20, OReg=F8000000, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000BA, Instruction=48, OReg=80000008, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000BB, Instruction=E0, OReg=       0, AReg=80000008, BReg=80000000, CReg=       1, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000BC, Instruction=24, OReg=       4, AReg=       1, BReg=80000000, CReg=       1, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000BD, Instruction=F2, OReg=      42, AReg=       1, BReg=80000000, CReg=       1, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000BE, Instruction=67, OReg=       7, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000BF, Instruction=20, OReg=FFFFFF80, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000C0, Instruction=20, OReg=FFFFF800, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000C1, Instruction=20, OReg=FFFF8000, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000C2, Instruction=20, OReg=FFF80000, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000C3, Instruction=20, OReg=FF800000, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000C4, Instruction=20, OReg=F8000000, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000C5, Instruction=44, OReg=80000004, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000C6, Instruction=E0, OReg=       0, AReg=80000004, BReg=80000000, CReg=       1, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000C7, Instruction=24, OReg=       4, AReg=       1, BReg=80000000, CReg=       1, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000C8, Instruction=F2, OReg=      42, AReg=       1, BReg=80000000, CReg=       1, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000C9, Instruction=67, OReg=       7, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000CA, Instruction=20, OReg=FFFFFF80, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000CB, Instruction=20, OReg=FFFFF800, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000CC, Instruction=20, OReg=FFFF8000, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000CD, Instruction=20, OReg=FFF80000, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000CE, Instruction=20, OReg=FF800000, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000CF, Instruction=20, OReg=F8000000, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000D0, Instruction=40, OReg=80000000, AReg=80000000, BReg=       1, CReg=80000000, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000D1, Instruction=E0, OReg=       0, AReg=80000000, BReg=80000000, CReg=       1, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000D2, Instruction= D, OReg=       D, AReg=       1, BReg=80000000, CReg=       1, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+
+data= 00000000
+ACK rx on link 0 when not waiting for ACKIPtr=800000E0, Instruction=21, OReg=       1, AReg=       1, BReg=80000000, CReg=       1, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000E1, Instruction=20, OReg=      10, AReg=       1, BReg=80000000, CReg=       1, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000E2, Instruction=B0, OReg=     100, AReg=       1, BReg=80000000, CReg=       1, WPtr=80000120. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000E3, Instruction=61, OReg=       1, AReg=       1, BReg=80000000, CReg=       1, WPtr=80000520. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000E4, Instruction=4C, OReg=FFFFFFEC, AReg=       1, BReg=80000000, CReg=       1, WPtr=80000520. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000E5, Instruction=21, OReg=       1, AReg=FFFFFFEC, BReg=       1, CReg=80000000, WPtr=80000520. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000E6, Instruction=FB, OReg=      1B, AReg=FFFFFFEC, BReg=       1, CReg=80000000, WPtr=80000520. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000E7, Instruction=92, OReg=       2, AReg=800000D3, BReg=       1, CReg=80000000, WPtr=80000520. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000EA, Instruction=60, OReg=       0, AReg=800000E8, BReg=       1, CReg=80000000, WPtr=80000510. WPtr[0]=800000E8
+mem[508]=00000000
+IPtr=800000EB, Instruction=BE, OReg=FFFFFFFE, AReg=800000E8, BReg=       1, CReg=80000000, WPtr=80000510. WPtr[0]=800000E8
+mem[508]=00000000
+IPtr=800000EC, Instruction=73, OReg=       3, AReg=800000E8, BReg=       1, CReg=80000000, WPtr=80000508. WPtr[0]=       0
+mem[508]=00000000
+
+Read from 80000514IPtr=800000ED, Instruction=25, OReg=       5, AReg=800000D3, BReg=800000E8, CReg=       1, WPtr=80000508. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000EE, Instruction=FA, OReg=      5A, AReg=800000D3, BReg=800000E8, CReg=       1, WPtr=80000508. WPtr[0]=       0
+mem[508]=00000000
+IPtr=800000EF, Instruction=D0, OReg=       0, AReg=800000D3, BReg=800000D3, CReg=800000E8, WPtr=80000508. WPtr[0]=       0
+mem[508]=00000000
+
+Wrote to 80000508IPtr=800000F0, Instruction=21, OReg=       1, AReg=800000D3, BReg=800000E8, CReg=800000E8, WPtr=80000508. WPtr[0]=800000D3
+mem[508]=D3000080
+IPtr=800000F1, Instruction=9C, OReg=      1C, AReg=800000D3, BReg=800000E8, CReg=800000E8, WPtr=80000508. WPtr[0]=800000D3
+mem[508]=D3000080
+IPtr=8000010E, Instruction=71, OReg=       1, AReg=800000F2, BReg=800000E8, CReg=800000E8, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+
+Read from 800004FCIPtr=8000010F, Instruction=40, OReg=       0, AReg=800000D3, BReg=800000F2, CReg=800000E8, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000110, Instruction=F0, OReg=       0, AReg=       0, BReg=800000D3, CReg=800000F2, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000111, Instruction=25, OReg=       5, AReg=800000D3, BReg=       0, CReg=800000F2, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000112, Instruction=FA, OReg=      5A, AReg=800000D3, BReg=       0, CReg=800000F2, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000113, Instruction=F1, OReg=       1, AReg=800000D3, BReg=800000D3, CReg=       0, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000114, Instruction=A5, OReg=       5, AReg=      68, BReg=800000D3, CReg=       0, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000115, Instruction=81, OReg=       1, AReg=800000D3, BReg=       0, CReg=       0, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000116, Instruction=F0, OReg=       0, AReg=800000D4, BReg=       0, CReg=       0, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000117, Instruction=81, OReg=       1, AReg=       0, BReg=800000D4, CReg=       0, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000118, Instruction=60, OReg=       0, AReg=       1, BReg=800000D4, CReg=       0, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000119, Instruction= 6, OReg=FFFFFFF6, AReg=       1, BReg=800000D4, CReg=       0, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+
+data= 0000017BIPtr=80000110, Instruction=F0, OReg=       0, AReg=       1, BReg=800000D4, CReg=       0, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000111, Instruction=25, OReg=       5, AReg=800000D4, BReg=       1, CReg=       0, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000112, Instruction=FA, OReg=      5A, AReg=800000D4, BReg=       1, CReg=       0, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000113, Instruction=F1, OReg=       1, AReg=800000D4, BReg=800000D4, CReg=       1, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000114, Instruction=A5, OReg=       5, AReg=      65, BReg=800000D4, CReg=       1, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000115, Instruction=81, OReg=       1, AReg=800000D4, BReg=       1, CReg=       1, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000116, Instruction=F0, OReg=       0, AReg=800000D5, BReg=       1, CReg=       1, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000117, Instruction=81, OReg=       1, AReg=       1, BReg=800000D5, CReg=       1, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000118, Instruction=60, OReg=       0, AReg=       2, BReg=800000D5, CReg=       1, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000119, Instruction= 6, OReg=FFFFFFF6, AReg=       2, BReg=800000D5, CReg=       1, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+
+data= 0000017DIPtr=80000110, Instruction=F0, OReg=       0, AReg=       2, BReg=800000D5, CReg=       1, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000111, Instruction=25, OReg=       5, AReg=800000D5, BReg=       2, CReg=       1, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000112, Instruction=FA, OReg=      5A, AReg=800000D5, BReg=       2, CReg=       1, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000113, Instruction=F1, OReg=       1, AReg=800000D5, BReg=800000D5, CReg=       2, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000114, Instruction=A5, OReg=       5, AReg=      6C, BReg=800000D5, CReg=       2, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000115, Instruction=81, OReg=       1, AReg=800000D5, BReg=       2, CReg=       2, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000116, Instruction=F0, OReg=       0, AReg=800000D6, BReg=       2, CReg=       2, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000117, Instruction=81, OReg=       1, AReg=       2, BReg=800000D6, CReg=       2, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000118, Instruction=60, OReg=       0, AReg=       3, BReg=800000D6, CReg=       2, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000119, Instruction= 6, OReg=FFFFFFF6, AReg=       3, BReg=800000D6, CReg=       2, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000110, Instruction=F0, OReg=       0, AReg=       3, BReg=800000D6, CReg=       2, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000111, Instruction=25, OReg=       5, AReg=800000D6, BReg=       3, CReg=       2, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000112, Instruction=FA, OReg=      5A, AReg=800000D6, BReg=       3, CReg=       2, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000113, Instruction=F1, OReg=       1, AReg=800000D6, BReg=800000D6, CReg=       3, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000114, Instruction=A5, OReg=       5, AReg=      6C, BReg=800000D6, CReg=       3, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000115, Instruction=81, OReg=       1, AReg=800000D6, BReg=       3, CReg=       3, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000116, Instruction=F0, OReg=       0, AReg=800000D7, BReg=       3, CReg=       3, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000117, Instruction=81, OReg=       1, AReg=       3, BReg=800000D7, CReg=       3, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000118, Instruction=60, OReg=       0, AReg=       4, BReg=800000D7, CReg=       3, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000119, Instruction= 6, OReg=FFFFFFF6, AReg=       4, BReg=800000D7, CReg=       3, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000110, Instruction=F0, OReg=       0, AReg=       4, BReg=800000D7, CReg=       3, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000111, Instruction=25, OReg=       5, AReg=800000D7, BReg=       4, CReg=       3, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000112, Instruction=FA, OReg=      5A, AReg=800000D7, BReg=       4, CReg=       3, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000113, Instruction=F1, OReg=       1, AReg=800000D7, BReg=800000D7, CReg=       4, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000114, Instruction=A5, OReg=       5, AReg=      6F, BReg=800000D7, CReg=       4, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000115, Instruction=81, OReg=       1, AReg=800000D7, BReg=       4, CReg=       4, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000116, Instruction=F0, OReg=       0, AReg=800000D8, BReg=       4, CReg=       4, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000117, Instruction=81, OReg=       1, AReg=       4, BReg=800000D8, CReg=       4, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000118, Instruction=60, OReg=       0, AReg=       5, BReg=800000D8, CReg=       4, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000119, Instruction= 6, OReg=FFFFFFF6, AReg=       5, BReg=800000D8, CReg=       4, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000110, Instruction=F0, OReg=       0, AReg=       5, BReg=800000D8, CReg=       4, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000111, Instruction=25, OReg=       5, AReg=800000D8, BReg=       5, CReg=       4, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000112, Instruction=FA, OReg=      5A, AReg=800000D8, BReg=       5, CReg=       4, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000113, Instruction=F1, OReg=       1, AReg=800000D8, BReg=800000D8, CReg=       5, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000114, Instruction=A5, OReg=       5, AReg=      20, BReg=800000D8, CReg=       5, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000115, Instruction=81, OReg=       1, AReg=800000D8, BReg=       5, CReg=       5, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000116, Instruction=F0, OReg=       0, AReg=800000D9, BReg=       5, CReg=       5, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000117, Instruction=81, OReg=       1, AReg=       5, BReg=800000D9, CReg=       5, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000118, Instruction=60, OReg=       0, AReg=       6, BReg=800000D9, CReg=       5, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000119, Instruction= 6, OReg=FFFFFFF6, AReg=       6, BReg=800000D9, CReg=       5, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000110, Instruction=F0, OReg=       0, AReg=       6, BReg=800000D9, CReg=       5, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000111, Instruction=25, OReg=       5, AReg=800000D9, BReg=       6, CReg=       5, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000112, Instruction=FA, OReg=      5A, AReg=800000D9, BReg=       6, CReg=       5, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000113, Instruction=F1, OReg=       1, AReg=800000D9, BReg=800000D9, CReg=       6, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000114, Instruction=A5, OReg=       5, AReg=      77, BReg=800000D9, CReg=       6, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000115, Instruction=81, OReg=       1, AReg=800000D9, BReg=       6, CReg=       6, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000116, Instruction=F0, OReg=       0, AReg=800000DA, BReg=       6, CReg=       6, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000117, Instruction=81, OReg=       1, AReg=       6, BReg=800000DA, CReg=       6, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000118, Instruction=60, OReg=       0, AReg=       7, BReg=800000DA, CReg=       6, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000119, Instruction= 6, OReg=FFFFFFF6, AReg=       7, BReg=800000DA, CReg=       6, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000110, Instruction=F0, OReg=       0, AReg=       7, BReg=800000DA, CReg=       6, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000111, Instruction=25, OReg=       5, AReg=800000DA, BReg=       7, CReg=       6, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000112, Instruction=FA, OReg=      5A, AReg=800000DA, BReg=       7, CReg=       6, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000113, Instruction=F1, OReg=       1, AReg=800000DA, BReg=800000DA, CReg=       7, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000114, Instruction=A5, OReg=       5, AReg=      6F, BReg=800000DA, CReg=       7, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000115, Instruction=81, OReg=       1, AReg=800000DA, BReg=       7, CReg=       7, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000116, Instruction=F0, OReg=       0, AReg=800000DB, BReg=       7, CReg=       7, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000117, Instruction=81, OReg=       1, AReg=       7, BReg=800000DB, CReg=       7, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000118, Instruction=60, OReg=       0, AReg=       8, BReg=800000DB, CReg=       7, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000119, Instruction= 6, OReg=FFFFFFF6, AReg=       8, BReg=800000DB, CReg=       7, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+
+data= 0000017FIPtr=80000110, Instruction=F0, OReg=       0, AReg=       8, BReg=800000DB, CReg=       7, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000111, Instruction=25, OReg=       5, AReg=800000DB, BReg=       8, CReg=       7, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000112, Instruction=FA, OReg=      5A, AReg=800000DB, BReg=       8, CReg=       7, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000113, Instruction=F1, OReg=       1, AReg=800000DB, BReg=800000DB, CReg=       8, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000114, Instruction=A5, OReg=       5, AReg=      72, BReg=800000DB, CReg=       8, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000115, Instruction=81, OReg=       1, AReg=800000DB, BReg=       8, CReg=       8, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000116, Instruction=F0, OReg=       0, AReg=800000DC, BReg=       8, CReg=       8, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000117, Instruction=81, OReg=       1, AReg=       8, BReg=800000DC, CReg=       8, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000118, Instruction=60, OReg=       0, AReg=       9, BReg=800000DC, CReg=       8, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000119, Instruction= 6, OReg=FFFFFFF6, AReg=       9, BReg=800000DC, CReg=       8, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000110, Instruction=F0, OReg=       0, AReg=       9, BReg=800000DC, CReg=       8, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000111, Instruction=25, OReg=       5, AReg=800000DC, BReg=       9, CReg=       8, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000112, Instruction=FA, OReg=      5A, AReg=800000DC, BReg=       9, CReg=       8, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000113, Instruction=F1, OReg=       1, AReg=800000DC, BReg=800000DC, CReg=       9, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000114, Instruction=A5, OReg=       5, AReg=      6C, BReg=800000DC, CReg=       9, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000115, Instruction=81, OReg=       1, AReg=800000DC, BReg=       9, CReg=       9, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000116, Instruction=F0, OReg=       0, AReg=800000DD, BReg=       9, CReg=       9, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000117, Instruction=81, OReg=       1, AReg=       9, BReg=800000DD, CReg=       9, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000118, Instruction=60, OReg=       0, AReg=       A, BReg=800000DD, CReg=       9, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000119, Instruction= 6, OReg=FFFFFFF6, AReg=       A, BReg=800000DD, CReg=       9, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000110, Instruction=F0, OReg=       0, AReg=       A, BReg=800000DD, CReg=       9, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000111, Instruction=25, OReg=       5, AReg=800000DD, BReg=       A, CReg=       9, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000112, Instruction=FA, OReg=      5A, AReg=800000DD, BReg=       A, CReg=       9, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000113, Instruction=F1, OReg=       1, AReg=800000DD, BReg=800000DD, CReg=       A, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000114, Instruction=A5, OReg=       5, AReg=      64, BReg=800000DD, CReg=       A, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000115, Instruction=81, OReg=       1, AReg=800000DD, BReg=       A, CReg=       A, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000116, Instruction=F0, OReg=       0, AReg=800000DE, BReg=       A, CReg=       A, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000117, Instruction=81, OReg=       1, AReg=       A, BReg=800000DE, CReg=       A, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000118, Instruction=60, OReg=       0, AReg=       B, BReg=800000DE, CReg=       A, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000119, Instruction= 6, OReg=FFFFFFF6, AReg=       B, BReg=800000DE, CReg=       A, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000110, Instruction=F0, OReg=       0, AReg=       B, BReg=800000DE, CReg=       A, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000111, Instruction=25, OReg=       5, AReg=800000DE, BReg=       B, CReg=       A, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000112, Instruction=FA, OReg=      5A, AReg=800000DE, BReg=       B, CReg=       A, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000113, Instruction=F1, OReg=       1, AReg=800000DE, BReg=800000DE, CReg=       B, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000114, Instruction=A5, OReg=       5, AReg=       A, BReg=800000DE, CReg=       B, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000115, Instruction=81, OReg=       1, AReg=800000DE, BReg=       B, CReg=       B, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000116, Instruction=F0, OReg=       0, AReg=800000DF, BReg=       B, CReg=       B, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000117, Instruction=81, OReg=       1, AReg=       B, BReg=800000DF, CReg=       B, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000118, Instruction=60, OReg=       0, AReg=       C, BReg=800000DF, CReg=       B, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000119, Instruction= 6, OReg=FFFFFFF6, AReg=       C, BReg=800000DF, CReg=       B, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000110, Instruction=F0, OReg=       0, AReg=       C, BReg=800000DF, CReg=       B, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000111, Instruction=25, OReg=       5, AReg=800000DF, BReg=       C, CReg=       B, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000112, Instruction=FA, OReg=      5A, AReg=800000DF, BReg=       C, CReg=       B, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000113, Instruction=F1, OReg=       1, AReg=800000DF, BReg=800000DF, CReg=       C, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=80000114, Instruction=A5, OReg=       5, AReg=       0, BReg=800000DF, CReg=       C, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=8000011A, Instruction=27, OReg=       7, AReg=       0, BReg=800000DF, CReg=       C, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=8000011B, Instruction=F9, OReg=      79, AReg=       0, BReg=800000DF, CReg=       C, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=8000011C, Instruction=27, OReg=       7, AReg=800000DF, BReg=       C, CReg=       0, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=8000011D, Instruction=F9, OReg=      79, AReg=800000DF, BReg=       C, CReg=       0, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=8000011E, Instruction=22, OReg=       2, AReg=       C, BReg=       0, CReg=800000DF, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=8000011F, Instruction=F0, OReg=      20, AReg=       C, BReg=       0, CReg=800000DF, WPtr=800004F8. WPtr[0]=800000F2
+mem[508]=D3000080
+IPtr=800000F2, Instruction=25, OReg=       5, AReg=       C, BReg=       0, CReg=800000DF, WPtr=80000508. WPtr[0]=800000D3
+mem[508]=D3000080
+IPtr=800000F3, Instruction=FA, OReg=      5A, AReg=       C, BReg=       0, CReg=800000DF, WPtr=80000508. WPtr[0]=800000D3
+mem[508]=D3000080
+IPtr=800000F4, Instruction=D1, OReg=       1, AReg=       C, BReg=       C, CReg=       0, WPtr=80000508. WPtr[0]=800000D3
+mem[508]=D3000080
+
+Wrote to 8000050CIPtr=800000F5, Instruction=21, OReg=       1, AReg=       C, BReg=       0, CReg=       0, WPtr=80000508. WPtr[0]=800000D3
+mem[508]=D3000080
+IPtr=800000F6, Instruction=A5, OReg=      15, AReg=       C, BReg=       0, CReg=       0, WPtr=80000508. WPtr[0]=800000D3
+mem[508]=D3000080
+IPtr=800000F7, Instruction=67, OReg=       7, AReg=       0, BReg=       0, CReg=       0, WPtr=80000508. WPtr[0]=800000D3
+mem[508]=D3000080
+IPtr=800000F8, Instruction=20, OReg=FFFFFF80, AReg=       0, BReg=       0, CReg=       0, WPtr=80000508. WPtr[0]=800000D3
+mem[508]=D3000080
+IPtr=800000F9, Instruction=20, OReg=FFFFF800, AReg=       0, BReg=       0, CReg=       0, WPtr=80000508. WPtr[0]=800000D3
+mem[508]=D3000080
+IPtr=800000FA, Instruction=20, OReg=FFFF8000, AReg=       0, BReg=       0, CReg=       0, WPtr=80000508. WPtr[0]=800000D3
+mem[508]=D3000080
+IPtr=800000FB, Instruction=20, OReg=FFF80000, AReg=       0, BReg=       0, CReg=       0, WPtr=80000508. WPtr[0]=800000D3
+mem[508]=D3000080
+IPtr=800000FC, Instruction=20, OReg=FF800000, AReg=       0, BReg=       0, CReg=       0, WPtr=80000508. WPtr[0]=800000D3
+mem[508]=D3000080
+IPtr=800000FD, Instruction=20, OReg=F8000000, AReg=       0, BReg=       0, CReg=       0, WPtr=80000508. WPtr[0]=800000D3
+mem[508]=D3000080
+IPtr=800000FE, Instruction=40, OReg=80000000, AReg=       0, BReg=       0, CReg=       0, WPtr=80000508. WPtr[0]=800000D3
+mem[508]=D3000080
+IPtr=800000FF, Instruction=21, OReg=       1, AReg=80000000, BReg=       0, CReg=       0, WPtr=80000508. WPtr[0]=800000D3
+mem[508]=D3000080
+IPtr=80000100, Instruction=20, OReg=      10, AReg=80000000, BReg=       0, CReg=       0, WPtr=80000508. WPtr[0]=800000D3
+mem[508]=D3000080
+IPtr=80000101, Instruction=41, OReg=     101, AReg=80000000, BReg=       0, CReg=       0, WPtr=80000508. WPtr[0]=800000D3
+mem[508]=D3000080
+IPtr=80000102, Instruction=FF, OReg=       F, AReg=     101, BReg=80000000, CReg=       0, WPtr=80000508. WPtr[0]=800000D3
+mem[508]=D3000080
+
+Outword. Channel 80000000.
+
+Sent 01
+data= 00000000
+ACK rx ok
+Sent 01
+data= 00000181
+data= 00000000
+ACK rx ok
+Sent 00
+data= 00000183
+data= 00000000
+ACK rx ok
+Sent 00
+data= 00000185
+data= 00000000
+ACK rx ok
+Message SentIPtr=80000103, Instruction=27, OReg=       7, AReg=     101, BReg=80000000, CReg=       0, WPtr=80000508. WPtr[0]=     101
+mem[508]=01010000
+IPtr=80000104, Instruction=F9, OReg=      79, AReg=     101, BReg=80000000, CReg=       0, WPtr=80000508. WPtr[0]=     101
+mem[508]=01010000
+IPtr=80000105, Instruction=71, OReg=       1, AReg=80000000, BReg=       0, CReg=     101, WPtr=80000508. WPtr[0]=     101
+mem[508]=01010000
+
+Read from 8000050CIPtr=80000106, Instruction=FE, OReg=       E, AReg=       C, BReg=80000000, CReg=       0, WPtr=80000508. WPtr[0]=     101
+mem[508]=01010000
+
+Outbyte. Channel 80000000.
+
+Sent 0C
+data= 00000187
+data= 00000000
+ACK rx ok
+Message SentIPtr=80000107, Instruction=70, OReg=       0, AReg=       C, BReg=80000000, CReg=       0, WPtr=80000508. WPtr[0]=       C
+mem[508]=0C000000
+
+Read from 80000508IPtr=80000108, Instruction=27, OReg=       7, AReg=       C, BReg=       C, CReg=80000000, WPtr=80000508. WPtr[0]=       C
+mem[508]=0C000000
+IPtr=80000109, Instruction=F9, OReg=      79, AReg=       C, BReg=       C, CReg=80000000, WPtr=80000508. WPtr[0]=       C
+mem[508]=0C000000
+IPtr=8000010A, Instruction=FB, OReg=       B, AReg=       C, BReg=80000000, CReg=       C, WPtr=80000508. WPtr[0]=       C
+mem[508]=0C000000
+
+Out. Channel 80000000, length        C, from memory at        C
+
+Sent 00
+data= 00000189
+data= 00000000
+ACK rx ok
+Sent 00
+data= 0000018B
+data= 00000000
+ACK rx ok
+Sent 00
+data= 0000018D
+data= 00000000
+ACK rx ok
+Sent 80
+data= 0000018F
+data= 00000000
+ACK rx ok
+Sent 00
+data= 00000191
+data= 00000000
+ACK rx ok
+Sent 00
+data= 00000193
+data= 00000000
+ACK rx ok
+Sent 00
+data= 00000195
+data= 00000000
+ACK rx ok
+Sent 80
+data= 00000197
+data= 00000000
+ACK rx ok
+Sent 00
+data= 00000199
+data= 00000000
+ACK rx ok
+Sent 00
+data= 0000019B
+data= 00000000
+ACK rx ok
+Sent 00
+data= 0000019D
+data= 00000000
+ACK rx ok
+Sent 80
+data= 0000019F
+data= 00000000
+ACK rx ok
+Message SentIPtr=8000010B, Instruction=B2, OReg=       2, AReg=       C, BReg=80000000, CReg=       C, WPtr=80000508. WPtr[0]=       C
+mem[508]=0C000000
+IPtr=8000010C, Instruction=22, OReg=       2, AReg=       C, BReg=80000000, CReg=       C, WPtr=80000510. WPtr[0]=800000E8
+mem[508]=0C000000
+IPtr=8000010D, Instruction=F0, OReg=      20, AReg=       C, BReg=80000000, CReg=       C, WPtr=80000510. WPtr[0]=800000E8
+mem[508]=0C000000
+IPtr=800000E8, Instruction=2C, OReg=       C, AReg=       C, BReg=80000000, CReg=       C, WPtr=80000520. WPtr[0]=       0
+mem[508]=0C000000
+IPtr=800000E9, Instruction=F2, OReg=      C2, AReg=       C, BReg=80000000, CReg=       C, WPtr=80000520. WPtr[0]=       0
+mem[508]=0C000000
+
+Bad Icode!.

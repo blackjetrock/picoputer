@@ -1,0 +1,1082 @@
+//////////////////////////////////////////////////////////////////////////////
+//
+// Arduino Link Server
+//
+// This program runs on a PC and attaches to the Arduino Link Monitor
+// which runs on an Arduino Mega attached to an IMSC011. the monitor
+// acts as a pipe between a transputer link and the USB connection to the
+// PC. The server processes traffic over the link.
+//
+// Currently just displays link data, but eventually will run SP server
+// protocol.
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#include <ctype.h>
+#include <stdio.h>
+#include <termios.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <string.h>
+#include <stdlib.h>
+#include <sys/time.h>
+
+typedef unsigned char BOOLEAN;
+const int false = 0;
+const int true = 1;
+
+#define DEBUG_TX              0
+#define OUT_PKT_DEBUG         0
+#define PKT_DEBUG             1
+#define SP_DEBUG              1
+#define DEBUG_BOOT_PROGRESS   1
+
+#define BYTE unsigned char
+
+#define PACKET_START '^'
+#define PACKET_END   '&'
+
+#define MAX_SP_PACKET_LEN 4096
+
+// We read input characters into this buffer
+#define MAX_IN_BUFFER  1000
+#define MAX_PATH 300
+
+// Calld from packet loop, var is arbitrary integer
+typedef void (*PACKET_HANDLER)(int link, char packet[], int *loop_done);
+
+void send_ack(int link);
+void send_byte(int link, int byte);
+void packet_loop(int link, PACKET_HANDLER ph);
+void done_on_ack(int link, char packet[], int *loop_done);
+
+int prepared = 0;
+
+void prepterm(int dir)
+{
+	static struct termios told, tnew;
+
+   if (!isatty(STDIN_FILENO))
+      return;
+
+	if (dir) {
+		if (prepared == 0) {
+			tcgetattr(STDIN_FILENO, &told);
+			tnew = told;
+	                tnew.c_iflag &= ~ICRNL;
+			tnew.c_lflag &= ~(ICANON | ECHO );
+			tcsetattr(STDIN_FILENO, TCSANOW | TCSAFLUSH, &tnew);
+			prepared = 1;
+		}
+	} else if (prepared) {
+		tcsetattr(STDIN_FILENO, TCSANOW | TCSAFLUSH, &told);
+		prepared = 0;
+   }
+}
+
+int has_key_timeout(int timeout)
+{
+	struct timeval tv;
+	fd_set rd;
+   int ret;
+
+	tv.tv_sec  = 0;
+	tv.tv_usec = timeout;
+
+	FD_ZERO(&rd);
+	FD_SET(STDIN_FILENO, &rd);
+
+	ret = select(STDIN_FILENO + 1, &rd, NULL, NULL, &tv);
+   if (0 == ret)  /* timeout */
+      return 0;
+   if (-1 == ret) /* error */
+      return 0;
+	return FD_ISSET(STDIN_FILENO, &rd);
+}
+
+int has_key(void)
+{
+   return has_key_timeout(0);
+}
+
+#define ESC          '\033'
+#define ESC_TIMEOUT  1000
+
+/*
+ * NB. using getchar() returns the ESC, but checking for the ESC-sequence
+ *     chars doesn't work. So we read the raw chars, but needs to flush
+ *     previously emitted chars.
+ */
+static
+unsigned char
+get_char(void)
+{
+   char buf;
+
+   fflush(stdout);
+   (void) read(STDIN_FILENO, &buf, sizeof(char));
+   return (unsigned char)buf;
+}
+
+int getkey(void)
+{
+	int ch;
+
+	ch = get_char();
+	if (ESC == ch)
+	  {
+	    if (!has_key_timeout(ESC_TIMEOUT))
+	      {
+		return ESC;
+	      }
+	    ch = (unsigned char)get_char();
+	    ch = (ch << 8) + (unsigned char)get_char();
+	    if (has_key())
+	      {
+	      ch = (ch << 8) + (unsigned char)get_char();
+	      }
+	  }
+
+	return ch;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Process SP protool
+//
+////////////////////////////////////////////////////////////////////////////////
+
+#define SP_OK               0
+
+#define SP_OPEN_TAG        10
+#define SP_CLOSE_TAG       11
+#define SP_READ_TAG        12
+#define SP_WRITE_TAG       13
+#define SP_GETS_TAG        14
+#define SP_PUTS_TAG        15
+#define SP_FLUSH_TAG       16
+#define SP_SEEK_TAG        17
+#define SP_TELL_TAG        18
+#define SP_EOF_TAG         19
+#define SP_FERROR_TAG      20
+#define SP_REMOVE_TAG      21
+#define SP_RENAME_TAG      22
+#define SP_GETBLOCK_TAG    23
+#define SP_PUTBLOCK_TAG    24
+#define SP_ISATTY_TAG      25
+#define SP_GETKEY_TAG      30
+#define SP_POLLKEY_TAG     31
+#define SP_GETENV_TAG      32
+#define SP_TIME_TAG        33
+#define SP_SYSTEM_TAG      34
+#define SP_EXIT_TAG        35
+#define SP_COMMANDLINE_TAG 40
+#define SP_CORE_TAG        41
+#define SP_VERSION_TAG     42
+#define SP_DOS_TAG         50
+#define SP_HELIOS_TAG      51
+#define SP_VMS_TAG         52
+#define SP_SUNOS_TAG       53
+
+#define FROFF_LEN0          0
+#define FROFF_LEN1          1
+#define FROFF_TAG           2
+#define FROFF_PAYLOAD       3
+
+// Write command
+#define FROFF_WRITE_ST_ID   3
+#define FROFF_WRITE_LEN     7
+#define FROFF_WRITE_DATA    9
+
+// Read command
+#define FROFF_READ_ST_ID   3
+#define FROFF_READ_LEN     7
+
+#define FROFF_PUTS_DATA     9
+
+#define FROFF_OPEN_F_LEN    FROFF_PAYLOAD
+#define FROFF_OPEN_F_NAME   (FROFF_OPEN_F_LEN+2)
+
+#define SP_OPEN_TYPE_BINARY 1
+#define SP_OPEN_TYPE_RAW    2
+
+#define SP_OPEN_MODE_EXISTING_INPUT            1
+#define SP_OPEN_MODE_NEW_OUTPUT                2
+#define SP_OPEN_MODE_CREATE_APPEND_OUTPUT      3
+#define SP_OPEN_MODE_EXISTING_UPDATE           4
+#define SP_OPEN_MODE_CREATE_NEW_UPDATE         5
+#define SP_OPEN_MODE_CREATE_NEW_APPEND_UPDATE  6
+
+char *sp_open_mode_to_text(int mode)
+{
+  char *result = "r";   // Default to read
+  
+  switch(mode)
+    {
+    case SP_OPEN_MODE_EXISTING_INPUT:
+      result = "r";
+      break;
+      
+    case SP_OPEN_MODE_NEW_OUTPUT:
+      result = "w";
+      break;
+      
+    case SP_OPEN_MODE_CREATE_APPEND_OUTPUT:
+      result = "a";
+      break;
+      
+    case SP_OPEN_MODE_EXISTING_UPDATE:
+      result = "r+";
+      break;
+      
+    case SP_OPEN_MODE_CREATE_NEW_UPDATE:
+      result = "w+";
+      break;
+      
+    case SP_OPEN_MODE_CREATE_NEW_APPEND_UPDATE:
+      result = "a+";
+      break;
+      
+    default:
+      break;
+    }
+
+  return(result);
+  
+}
+
+char *sp_open_type_to_text(int type)
+{
+  char *result = ""; // default to text
+  
+  switch(type)
+    {
+    case SP_OPEN_TYPE_BINARY:
+      result = "b";
+      break;
+
+    case SP_OPEN_TYPE_RAW:
+      result = "";
+      break;
+      
+    default:
+      break;
+    }
+  
+  return(result);
+}
+
+// We get a character at a time, process it
+
+// Are we in a frame?
+int in_frame = 0;
+
+// How many bytes in frame so far?
+int frame_n = 0;
+int frame_length;
+
+#define MAX_FRAME (1024+2)
+
+// Frame data
+BYTE frame[MAX_FRAME];
+
+// File handle map
+// We don't return the file handle as a stream ID, we map it to our own numbers
+typedef struct _HANDLE_MAP
+{
+  BOOLEAN used;
+  FILE *fp;
+  
+} HANDLE_MAP;
+
+#define MAX_HANDLE_MAP 100
+
+HANDLE_MAP handle_map[MAX_HANDLE_MAP];
+
+#define HANDLE_MAP_UNUSED  MAX_HANDLE_MAP+1
+#define HANDLE_MAP_NONE    MAX_HANDLE_MAP+2
+
+FILE *get_handle_for_id(int id)
+{
+  if( id > MAX_HANDLE_MAP )
+    {
+      printf("\nInvalid stream id");
+      exit(-1);
+    }
+
+  if( !handle_map[id].used )
+    {
+      return(NULL);
+    }
+
+  return(handle_map[id].fp );
+}
+
+int store_new_handle(FILE *fp)
+{
+  int i;
+
+  for(i=0; i<MAX_HANDLE_MAP; i++)
+    {
+      if( !handle_map[i].used )
+	{
+	  handle_map[i].fp = fp;
+	  handle_map[i].used = true;
+	  return(i);
+	}
+    }
+  
+  return(HANDLE_MAP_NONE);
+}
+
+void process_sp_traffic(int link, char packet[])
+{
+  int write_length;
+  int stream_id;
+  unsigned int d2;
+  BYTE data;
+  
+  // get the new byte
+  sscanf(packet, "%x", &d2);
+  data = d2;
+  
+#if PKT_DEBUG
+  printf("PKT:[%s] = %d ('%c') frame_n=%d\n", packet, data, isprint(data)?data: '.', frame_n);
+#endif
+  
+  // One more character
+  if( !in_frame )
+    {
+      // Must be the start of a frame
+      frame_n = 0;
+      frame[frame_n++] = data;
+      in_frame = 1;
+    }
+  else
+    {
+      // One more byte for the frame
+      frame[frame_n++] = data;
+
+      // Can we work out the length?
+      if( frame_n == 2 )
+	{
+	  // Calculate length
+	  frame_length = frame[FROFF_LEN0] + 256 * frame[FROFF_LEN1];
+	}
+
+      // We leave the length bytes in the packet so we have to add 2 to the
+      // length here
+      if( frame_n == (frame_length+2) )
+	{
+	  char filename[40];
+	  int filename_length;
+	  int file_type;
+	  int file_mode;
+	  int ch;
+	  char file_text_mode[10];
+	  FILE *fp;
+	  int stream_id;
+	  int read_length;
+	  
+	  // We have the frame, process it
+
+	  // If length is 6 or greater then it's SP
+	  // Otherwise other functions
+	  if( frame_length >= 6 )
+	    {
+#if SP_DEBUG	      
+	      printf("SP Frame Tag:%d Frame Length:%04X (%d)\n", frame[FROFF_TAG], frame_length, frame_length);
+#endif	      
+	      switch(frame[FROFF_TAG])
+		{
+		case SP_OPEN_TAG:
+
+		  // Open file
+		  // We can infer the length of the file name
+		  filename_length = frame[FROFF_OPEN_F_LEN]+256*frame[FROFF_OPEN_F_LEN+1];
+		  
+		  file_type = frame[FROFF_OPEN_F_NAME+filename_length];
+		  file_mode = frame[FROFF_OPEN_F_NAME+filename_length+1];
+		  strncpy(filename, &(frame[FROFF_OPEN_F_NAME]), filename_length);
+		  filename[filename_length] = '\0';
+		  strcpy(file_text_mode, sp_open_mode_to_text(file_mode));
+		  strcat(file_text_mode, sp_open_type_to_text(file_type));
+
+		  // We can now open the file
+		  fp = fopen(filename, file_text_mode);
+
+		  // Map to stream id
+		  stream_id = store_new_handle(fp);
+
+		  // reply
+
+		  // length
+		  send_byte(link, 5);
+		  packet_loop(link, done_on_ack);
+		  send_byte(link, 0);
+		  packet_loop(link, done_on_ack);
+
+		  // Send reply
+		  send_byte(link, SP_OK);
+		  packet_loop(link, done_on_ack);
+
+		  // Report we have processed all bytes
+		  send_byte(link, (stream_id >>  0) & 0xff);
+		  packet_loop(link, done_on_ack);
+		  send_byte(link, (stream_id >>  8) & 0xff);
+		  packet_loop(link, done_on_ack);
+		  send_byte(link, (stream_id >> 16) & 0xff);
+		  packet_loop(link, done_on_ack);
+		  send_byte(link, (stream_id >> 24) & 0xff);
+		  packet_loop(link, done_on_ack);
+		  
+#if SP_DEBUG
+		  printf("SP_OPEN  Filename:%s Length:%02X (%d) Type:%d Mode:%d\n", filename, filename_length, filename_length, file_type, file_mode);
+		  printf("SP_OPEN  File Mode:%s Stream_id:%08X\n", file_text_mode, stream_id);
+#endif
+		  
+		  break;
+		  
+		case SP_CLOSE_TAG:
+		  break;
+		  
+		case SP_READ_TAG:
+		  // Open file
+
+		  // Get stream ID
+		  stream_id = 0;
+		  for(int i=0; i<4; i++)
+		    {
+		      stream_id  += frame[FROFF_READ_ST_ID+i]*(1<<i);
+		    }
+		  read_length = frame[FROFF_READ_LEN]+256*frame[FROFF_READ_LEN+1];
+
+		  // Get file handle
+		  fp = get_handle_for_id(stream_id);
+		  
+		  // reply
+
+		  // length
+		  send_byte(link, (read_length+1) % 256);
+		  packet_loop(link, done_on_ack);
+		  send_byte(link, (read_length+1) / 256);
+		  packet_loop(link, done_on_ack);
+
+		  // Send reply
+		  send_byte(link, SP_OK);
+		  packet_loop(link, done_on_ack);
+
+		  // read data and send it
+		  for(int i = 0; i<read_length; i++)
+		    {
+		      int nb;
+		      BYTE byte;
+		      
+		      nb = fread(&byte, 1, 1, fp);
+		      
+		      send_byte(link, byte);
+		      packet_loop(link, done_on_ack);
+#if SP_DEBUG
+		      printf("0x%04X: %02X\n", i+1, byte); 
+#endif
+		    }
+		  
+		  send_byte(link, 0);
+		  packet_loop(link, done_on_ack);
+#if SP_DEBUG
+		  printf("SP_READ  Stream ID:%08X Length:%04X (%d)\n", stream_id, read_length, read_length);
+		  
+#endif
+		  break;
+
+		case SP_WRITE_TAG:
+		  // Write to a stream
+		  // Get stream ID
+		  stream_id = 0;
+		  for(int i=0; i<4; i++)
+		    {
+		      stream_id  += frame[FROFF_WRITE_ST_ID+i]*(1<<i);
+		    }
+		  write_length = frame[FROFF_WRITE_LEN]+256*frame[FROFF_WRITE_LEN+1];
+#if SP_DEBUG
+		  printf("SP_WRITE  Stream:%04X Length:%02X (%d)\n", stream_id, write_length, write_length);
+#endif
+		  // Now write to the stream
+		  fp = get_handle_for_id(stream_id);
+
+		      for(int i=0; i<write_length; i++)
+			{
+			  fputc(frame[FROFF_WRITE_DATA+i], fp);
+			}
+		      fflush(fp);
+#if 1
+		  // length
+		  send_byte(link, 3);
+		  packet_loop(link, done_on_ack);
+		  send_byte(link, 0);
+		  packet_loop(link, done_on_ack);
+
+		  // Send reply
+		  send_byte(link, SP_OK);
+		  packet_loop(link, done_on_ack);
+
+		  // Report we have processed all bytes
+		  send_byte(link, write_length % 256);
+		  packet_loop(link, done_on_ack);
+		  send_byte(link, write_length / 256);
+		  packet_loop(link, done_on_ack);
+#endif
+		  break;
+		  
+		case SP_GETS_TAG:
+		  break;
+		case SP_PUTS_TAG:
+		  // Puts a string to a stream
+		  stream_id = 0;
+		  for(int i=0; i<4; i++)
+		    {
+		      stream_id  += frame[FROFF_WRITE_ST_ID+i]*(1<<i);
+		    }
+		  write_length = frame_length-7;
+#if 0
+		  printf("SP_PUTS  Stream:%04X Length:%02X (%d)\n", stream_id, write_length, write_length);
+#endif
+		  
+		  // Now write to the stream
+		  switch(stream_id)
+		    {
+		    case 1:
+		      for(int i=0; i<write_length; i++)
+			{
+			  printf("%c",  frame[FROFF_PUTS_DATA+i]);
+			}
+		      fflush(stdout);
+		      
+		      break;
+		    }
+
+#if 1
+		  // length
+		  send_byte(link, 3);
+		  packet_loop(link, done_on_ack);
+		  send_byte(link, 0);
+		  packet_loop(link, done_on_ack);
+
+		  // Send reply
+		  send_byte(link, SP_OK);
+		  packet_loop(link, done_on_ack);
+
+		  // Report we have processed all bytes
+		  send_byte(link, write_length % 256);
+		  packet_loop(link, done_on_ack);
+		  send_byte(link, write_length / 256);
+		  packet_loop(link, done_on_ack);
+#endif
+		  
+		  break;
+		  
+		case SP_FLUSH_TAG:
+		  break;
+		case SP_SEEK_TAG:
+		  break;
+		case SP_TELL_TAG:
+		  break;
+		case SP_EOF_TAG:
+		  break;
+		case SP_FERROR_TAG:
+		  break;
+		case SP_REMOVE_TAG:
+		  break;
+		case SP_RENAME_TAG:
+		  break;
+		case SP_GETBLOCK_TAG:
+		  break;
+		case SP_PUTBLOCK_TAG:
+		  break;
+		case SP_ISATTY_TAG:
+		  break;
+		  
+		case SP_GETKEY_TAG:
+		  // Wait for and get a key
+		  ch = getkey();
+#if 1
+		  // length
+		  send_byte(link, 2);
+		  packet_loop(link, done_on_ack);
+		  send_byte(link, 0);
+		  packet_loop(link, done_on_ack);
+
+		  // Send reply
+		  send_byte(link, SP_OK);
+		  packet_loop(link, done_on_ack);
+
+		  send_byte(link, ch);
+		  packet_loop(link, done_on_ack);
+
+#endif
+		  
+		  break;
+		  
+		case SP_POLLKEY_TAG:
+		  break;
+		case SP_GETENV_TAG:
+		  break;
+		case SP_TIME_TAG:
+		  break;
+		case SP_SYSTEM_TAG:
+		  break;
+		case SP_EXIT_TAG:
+		  break;
+		case SP_COMMANDLINE_TAG:
+		  break; 
+		case SP_CORE_TAG:
+		  break;
+		case SP_VERSION_TAG:
+		  break;
+		case SP_DOS_TAG:
+		  break;
+		case SP_HELIOS_TAG:
+		  break;
+		case SP_VMS_TAG:
+		  break;
+		case SP_SUNOS_TAG:
+		  break;
+		}
+	    }
+
+	  // All done with this frame
+	  frame_n = 0;
+	  in_frame = 0;
+	}
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Packet handler that just displays the data that has been received.
+//
+////////////////////////////////////////////////////////////////////////////////
+
+// Handle SP protocol
+
+int in_sp_packet = 0;
+int sp_packet_i = 0;
+BYTE data = 0xaa;
+
+BYTE sp_packet[MAX_SP_PACKET_LEN];
+
+void process_packet(int link, char packet[], int *loop_done)
+{
+  unsigned int d2;
+
+  // ACK the byte
+  send_ack(link);
+
+  process_sp_traffic(link, packet);
+  
+#if 0
+  // get the new byte
+  sscanf(packet, "%x", &d2);
+  data = d2;
+  
+  printf("PKT:[%s] = %d\n", input_buffer, data);
+
+  if( !in_sp_packet )
+    {
+      int length = sp_packet[0] + 256 * sp_packet[1];
+      
+      // Start of a new packet, build it up
+      sp_packet[sp_packet_i++] = data;
+
+      // Are we done?
+      // The length will equal the number of bytes in sp_packet
+      // when we are
+      // We have to have had at least 2 bytes
+      if( sp_packet_i >= 2 )
+	{
+	  if( length == sp_packet_i )
+	    {
+	      // We have the packet
+	      printf("SP packet received");
+
+	      // The length determines what we do with the packet
+	      if( length >=6 )
+		{
+		  process_sp_packet(sp_packet);
+		}
+	      
+	      // We have done this packet
+	      in_sp_packet = 0;
+	      sp_packet_i = 0;
+	    }
+	}
+    }
+
+  #endif
+  
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Packet loop function.
+//
+// Waits for data on the link and calls a function when it arrives.
+//
+// Setting packet_loop_done to true causes loop to exit
+//
+////////////////////////////////////////////////////////////////////////////////
+
+int packet_loop_done = 0;
+
+// Character ACKed, could be link data
+
+void done_on_ack(int link, char packet[], int *loop_done)
+{
+  char line[40];
+  int byteval;
+
+  sscanf(packet, "%X", &byteval);
+
+#if 0  
+  printf("%s:[%s]('%c')\n", __FUNCTION__, packet, byteval);
+#endif
+  
+  if( strcmp(packet, "^") == 0 )
+    {
+#if 0      
+      printf("ACK received\n");
+#endif
+      *loop_done = 1;
+    }
+  
+}
+
+char bootfile[MAX_PATH+1] = "nofile.bin";
+char portname[MAX_PATH] = "/dev/ttyUSB0";
+
+int bootflag = 1;
+
+// First byte of boot fileis length
+int flag_length_first_byte = 1;
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Wait for packets, if they come in call the function
+//
+// When function is called, the start and end markers have been removed
+//
+////////////////////////////////////////////////////////////////////////////////
+
+void packet_loop(int link, PACKET_HANDLER ph)
+{
+  char data;
+  int num_in = 0;
+  char input_buffer[MAX_IN_BUFFER];
+  int in_packet = 0;
+  int packet_loop_done = 0;
+
+  while (!packet_loop_done)
+    {
+      
+      // Is there any data coming in from the link?
+      if (read(link, &data, 1) != 0)
+	{
+	  
+	  // If not in packet then look for packet start
+	  if( !in_packet )
+	    {
+	      if( data == PACKET_START)
+		{
+		  in_packet = 1;
+		  num_in = 0;
+		}
+	      else
+		{
+		}
+	    }
+	  else
+	    {
+	      // If in a packet then add to buffer
+	      // Until end of packet
+	      if( data == PACKET_END )
+		{
+		  input_buffer[num_in] = '\0';
+		    
+		  // All done, process packet
+		  // Strip off the start and end tokens
+		  (*ph)(link, input_buffer, &packet_loop_done);
+		    
+		  num_in = 0;
+		  in_packet = 0;
+		}
+	      else
+		{
+		  // Add to buffer
+		  input_buffer[num_in++] = data;
+		}
+	    }
+	}
+    }
+}
+
+int num_sent = 0;
+int ack_sent = 0;
+
+void send_byte(int link, int byte)
+{
+  char buf[40];
+  
+  // Send byte
+  sprintf(buf, "^%02X&\n", byte);
+#if DEBUG_TX  
+  printf("Sending byte %d: '%s' (%d acks)\n", ++num_sent, buf, ack_sent);
+#endif
+  write(link, &(buf[0]), 1);
+  write(link, &(buf[1]), 1);
+  write(link, &(buf[2]), 1);
+  write(link, &(buf[3]), 1);
+  write(link, &(buf[4]), 1);
+}
+
+void send_ack(int link)
+{
+  char buf2[40];
+
+  ack_sent++;
+  
+  // Send byte
+  sprintf(buf2, "^^&\n");
+#if DEBUG_TX
+  printf("Sending ACK\n");
+#endif
+  write(link, &(buf2[0]), 1);
+  write(link, &(buf2[1]), 1);
+  write(link, &(buf2[2]), 1);
+  write(link, &(buf2[3]), 1);
+}
+
+int main(int argc, char *argv[])
+{
+  int link;
+  struct termios options;
+  char message[100];
+  int b;
+
+  int i;
+
+  prepterm(1);
+
+  // Intialise the file handle map
+  for(int i=0; i<MAX_HANDLE_MAP; i++)
+    {
+      handle_map[i].used = false;
+    }
+
+  // Set up predefined streams
+  handle_map[0].used = true;
+  handle_map[0].fp = stdin;
+  handle_map[1].used = true;
+  handle_map[1].fp = stdout;
+  handle_map[2].used = true;
+  handle_map[2].fp = stderr;
+  
+  // Process arguments
+  for(i=1; i< argc; i++)
+    {
+      if( strcmp(argv[i], "-b") == 0 )
+	{
+	  if( argc > (i+1) )
+	    {
+	      strcpy(bootfile, argv[i+1]);
+	      printf("Bootfile:%s\n", bootfile);
+	    }
+	  else
+	    {
+	      printf("-b option has no filename\n");
+	      exit(1);
+	    }
+	  i++;
+	    
+	  // indicate we want to send the boot file
+	    
+	  bootflag = 1;
+	}
+
+      if( strcmp(argv[i], "-d") == 0 )
+	{
+	  if( argc > (i+1) )
+	    {
+	      strcpy(portname, argv[i+1]);
+	      printf("Port name:%s\n", portname);
+	    }
+	  else
+	    {
+	      printf("-d option has no port name\n");
+	      exit(1);
+	    }
+	}
+    }
+
+  printf("Serial port ");
+  
+  link = open(portname, O_RDWR | O_NOCTTY | O_NDELAY);
+    
+  if(link == -1)
+    {
+      printf("NOT OK\n");
+      exit(1);
+    }
+    
+  printf("OK\n");
+
+  // We must have echo off or the protocol falls over
+  
+  tcgetattr(link, &options);          
+  cfsetispeed(&options, B115200);                   
+  cfsetospeed(&options, B115200);                   
+  options.c_cflag |= (CLOCAL | CREAD);              
+
+  options.c_cflag |= PARODD;                      
+  options.c_cflag &= ~CSTOPB;                     
+  options.c_cflag &= ~CSIZE;
+  options.c_lflag &= ~ECHO;
+  options.c_cflag |= CS8;
+  options.c_iflag |= (INPCK | ISTRIP);            
+  tcsetattr(link, TCSANOW, &options);          
+  fcntl(link, F_SETFL, FNDELAY);          
+
+
+  ////////////////////////////////////////////////////////////////////////////////
+  //
+  // Send boot file if required
+  //
+
+  if( bootflag )
+    {
+      FILE *fp;
+      char buf[100];
+      
+      // Wait for link monitor to start up
+      usleep(1000000);
+      
+      // Open the (binary) file
+      fp = fopen(bootfile, "rb");
+
+      if( fp == NULL )
+	{
+	  printf("Could not open boot file: '%s'\n", bootfile);
+	  exit(1);
+	}
+      else
+	{
+	  unsigned char byte;
+	  int nb;
+	  //int bootfile_length = 0;
+	  
+	  printf("Sending boot file\n");
+
+	  // Send the file, length is first byte of file
+	  // No calculation necessary, just send the file
+	  
+#if 0	  
+	  printf("Calculating length of boot file...\n");
+
+	  if( flag_length_first_byte )
+	    {
+	      printf("Boot file length in first byte\n");
+	      nb = fread(&byte, 1, 1, fp);
+
+	      if( nb == 1 )
+		{
+		  bootfile_length = byte;
+		}
+	      else
+		{
+		  printf("Could not read boot file\n");
+		  exit(1);
+		}
+	    }
+	  else
+	    {
+	      bootfile_length = 0;
+	      while(1)
+		{
+		  nb = fread(&byte, 1, 1, fp);
+		  
+		  if( nb == 0 )
+		    {
+		      // All done
+		      break;
+		    }
+		  else
+		    {
+		      bootfile_length++;
+		    }
+		}
+	      fclose(fp);
+	    }
+	  
+	  printf("Boot file length %d bytes\n", bootfile_length);
+
+
+
+	  // Send the file length. We could, of course, just send the file
+	  // with the length at the start.
+	  
+	  send_byte(i, bootfile_length);
+
+	  // Wait for ACK
+	  packet_loop(link, done_on_ack);
+#endif
+
+#if DEBUG_BOOT_PROGRESS
+	  int boot_bytes = 0;
+#endif
+	  // Send the boot file contents
+	  
+	  while( 1 )
+	    {
+	      // Read and send the file contents
+	      nb = fread(&byte, 1, 1, fp);
+
+	      if( nb == 0 )
+		{
+		  // All done
+		  break;
+		}
+	      else
+		{
+		  send_byte(link, byte);
+
+		  // Wait for ACK
+		  packet_loop(link, done_on_ack);
+		  
+#if DEBUG_BOOT_PROGRESS
+		  boot_bytes++;
+		  if( (boot_bytes % 100) == 0 )
+		    {
+		      printf("%d bytes\n", boot_bytes);
+		    }
+#endif
+
+		  
+		}
+	    }
+	  fclose(fp);
+	}
+
+      printf("Boot file sent\n");
+    }
+
+  // Drop into main packet processing loop
+  packet_loop(link, process_packet);
+
+    
+  close(link);
+}
+
+

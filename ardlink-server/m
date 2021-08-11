@@ -1,0 +1,1 @@
+cc -o ardlink-server ardlink-server.c
