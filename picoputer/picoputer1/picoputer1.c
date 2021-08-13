@@ -17,6 +17,9 @@
 
 #define DEBUG_STOP {volatile x = 1; while(x) ;}
 
+// Checks the external memory 
+#define SPI_RAM_CHECK  0
+
 #define MEM_BYTE_MASK 0x0000ffff
 
 const uint LED_PIN    = 25;
@@ -2616,11 +2619,11 @@ void link_in_booting_ack(int i)
 static inline void cs_select(uint cs_pin) {
   //asm volatile("nop \n nop \n nop"); // FIXME
     gpio_put(cs_pin, 0);
-    asm volatile("nop \n nop \n nop"); // FIXME
+    //asm volatile("nop \n nop \n nop"); // FIXME
 }
 
 static inline void cs_deselect(uint cs_pin) {
-    asm volatile("nop \n nop \n nop"); // FIXME
+  //asm volatile("nop \n nop \n nop"); // FIXME
     gpio_put(cs_pin, 1);
     //asm volatile("nop \n nop \n nop"); // FIXME
 }
@@ -2758,7 +2761,9 @@ int spimain(int testval, int init)
 	
 	printf("SPI initialised, testing\n");
       }
-    
+
+    // We don't need this basic read/write check, instead there's a proper simple memory check
+#if 0    
     uint8_t page_buf[FLASH_PAGE_SIZE];
 
     const uint32_t target_addr = 0x1000;
@@ -2824,7 +2829,10 @@ int spimain(int testval, int init)
     printf("Initial state read:\n");
     printbuf(page_buf);
 
+#endif
+    
     return 0;
+    
 #endif
 }
 
@@ -2855,7 +2863,47 @@ int main()
   spimain(0x55, 1);
 
   spimain(0x66, 0);
+
   
+#if SPI_RAM_CHECK
+
+#define MEM_CHECK_SIZE (8*1024*1024)
+    
+    // Write ints to all of memory and then read them back
+    int addr = 0;
+    int value = 0;
+
+    printf("\nWriting test data");
+    for(addr = 0; addr < MEM_CHECK_SIZE; addr+=4)
+      {
+	if( (addr % 100000)==0 )
+	  {
+	    printf("\nWriting %08X", addr);
+	  }
+	writeword_int(addr, value++);
+      }
+
+    printf("\nReading test data");
+    value = 0;
+    
+    for(addr = 0; addr < MEM_CHECK_SIZE; addr+=4)
+      {
+	if( (addr % 100000)==0 )
+	  {
+	    printf("\nReading %08X", addr);
+	  }
+
+	if( word_int(addr) != value++)
+	  {
+	    printf("\nError at %08X, read %02X, should be %02X", addr, word_int(addr), value-1);
+	  }
+      }
+    
+    
+#endif
+
+#if 0
+
   // read and write words and bytes
   unsigned char byte = 0x45;
   unsigned char byte2 = 0x11;
@@ -2869,10 +2917,17 @@ int main()
 
   printf("\nInitial %02X, Wrote %02X, read %02X", byte_init, byte, byte2);
 
-  ram_read(spi1, PICO_DEFAULT_SPI_CSN_PIN, 0x1000, page_buf, 255);
+#endif
   
+#if 1
+  // Display some RAM contents just to make sure our test data is non zero
+  ram_read(spi1, PICO_DEFAULT_SPI_CSN_PIN, 0x1000, page_buf, 256);
   printf("Initial state read:\n");
   printbuf(page_buf);
+  ram_read(spi1, PICO_DEFAULT_SPI_CSN_PIN, 0x1000+256, page_buf, 256);
+
+  printbuf(page_buf);
+#endif
   
 #if 0
   gpio_init(LED_PIN);

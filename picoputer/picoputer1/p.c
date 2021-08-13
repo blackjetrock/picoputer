@@ -87,7 +87,7 @@ unsigned char core[CORE_SIZE];
 
 #if SPI_RAM
 // mem is stored in external RAM
-#define MEM_SIZE (2*1024*1024)
+#define MEM_SIZE (8*1024*1024)
 
 #define MEM_WORD_MASK ((MEM_SIZE - 1 ) & 0xFFFFFFFC)
 #define MEM_BYTE_MASK  (MEM_SIZE - 1 )
