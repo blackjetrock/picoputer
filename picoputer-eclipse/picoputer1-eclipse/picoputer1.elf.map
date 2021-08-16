@@ -1873,9 +1873,9 @@ Discarded input sections
                 0x0000000000000000       0x3c CMakeFiles/picoputer1.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_spi/spi.c.obj
  .time_critical.spi_read16_blocking
                 0x0000000000000000       0x3e CMakeFiles/picoputer1.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_spi/spi.c.obj
- .text          0x0000000000000000        0x0 /tmp/ccqI6f02.o
- .data          0x0000000000000000        0x0 /tmp/ccqI6f02.o
- .bss           0x0000000000000000        0x0 /tmp/ccqI6f02.o
+ .text          0x0000000000000000        0x0 /tmp/cc6XSTcX.o
+ .data          0x0000000000000000        0x0 /tmp/cc6XSTcX.o
+ .bss           0x0000000000000000        0x0 /tmp/cc6XSTcX.o
  .data          0x0000000000000000        0x0 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-feclearexcept.o)
  .bss           0x0000000000000000        0x0 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-feclearexcept.o)
  .data          0x0000000000000000        0x0 /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-feholdexcept.o)
@@ -2633,7 +2633,7 @@ LOAD /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp
 .boot2          0x0000000010000000      0x100
                 0x0000000010000000                __boot2_start__ = .
  *(.boot2)
- .boot2         0x0000000010000000      0x100 /tmp/ccqI6f02.o
+ .boot2         0x0000000010000000      0x100 /tmp/cc6XSTcX.o
                 0x0000000010000100                __boot2_end__ = .
                 0x0000000000000001                ASSERT (((__boot2_end__ - __boot2_start__) == 0x100), ERROR: Pico second stage bootloader must be 256 bytes in size)
 
@@ -5349,7 +5349,7 @@ LOAD CMakeFiles/picoputer1.dir/tree/downloaded_tools/pico/pico-extras/src/rp2_co
 LOAD CMakeFiles/picoputer1.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_dma/dma.c.obj
 LOAD CMakeFiles/picoputer1.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_pio/pio.c.obj
 LOAD CMakeFiles/picoputer1.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_spi/spi.c.obj
-LOAD /tmp/ccqI6f02.o
+LOAD /tmp/cc6XSTcX.o
 LOAD /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libstdc++.a
 LOAD /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a
 START GROUP
@@ -5496,7 +5496,7 @@ LOAD linker stubs
  .ARM.attributes
                 0x0000000000000a3c       0x2c CMakeFiles/picoputer1.dir/tree/downloaded_tools/pico/pico-sdk/src/rp2_common/hardware_spi/spi.c.obj
  .ARM.attributes
-                0x0000000000000a68       0x22 /tmp/ccqI6f02.o
+                0x0000000000000a68       0x22 /tmp/cc6XSTcX.o
  .ARM.attributes
                 0x0000000000000a8a       0x2c /usr/lib/gcc/arm-none-eabi/9.2.1/../../../arm-none-eabi/lib/thumb/v6-m/nofp/libm.a(lib_a-feclearexcept.o)
  .ARM.attributes

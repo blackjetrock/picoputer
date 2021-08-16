@@ -2849,7 +2849,7 @@ int main()
 
   stdio_init_all();
 
-  printf("Picoputer\n");
+  printf("\nPicoputer\n");
 
   //DEBUG_STOP;
   spimain(0x55, 1);
