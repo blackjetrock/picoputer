@@ -1,7 +1,7 @@
 # picoputer
 Raspberry Pi Pico Transputer Emulator
 
-This is a port of Julian Highfield's transputer emulator (via https://github.com/pahihu/t4). the emulator runs on a raspberry Pi Pico and talks down links that are attached to PIO hardware. The PIOs run code that uses the 10MHz transputer link protocol. In the original setup these links run to an INMOS IMSC011 which is attached to an Arduino Mega. The Mage runs a (very inefficient) protocol that communicates over USB with a host.
+This is a port of Julian Highfield's transputer emulator (via https://github.com/pahihu/t4). the emulator runs on a raspberry Pi Pico and talks down links that are attached to PIO hardware. The PIOs run code that uses the 10MHz transputer link protocol. In the original setup these links run to an INMOS IMSC011 which is attached to an Arduino Mega. The Mega runs a (very inefficient) protocol that communicates over USB with a host.
 
 The Arduino runs the program ard-link-monitor.ino
 The host PC runs the program ardlink-server
@@ -12,7 +12,7 @@ I am having to compile Occam using the geekdot transputer SDK (http://www.geekdo
 
 I haven't managed to get the TDS3 to run on the t4 emulator and do anything useful, but I think it sould, and that would be a better way to compile Occam I think.
 
-The Arduino/IMSC011 circuit needs a POB, if you hand wir eit then you just need to use the GPIO settings in the cod eto work out the wiring. I have also used level shifters between the IMSC011 and the Pico as they run at different voltages. As I used transistors the PIO code inverts the signalsso the IMSC011 gets the correct polarity.
+The Arduino/IMSC011 circuit needs a POB, if you hand wire it then you just need to use the GPIO settings in the code to work out the wiring. I have also used level shifters between the IMSC011 and the Pico as they run at different voltages. As I used transistors the PIO code inverts the signals so the IMSC011 gets the correct polarity.
 
 The PIO code treats the ACK packet as an 11 bit packet like the data packets, this isn't right and could do with fixing. It seems to work, though, probably because my protocol is so inefficient.
 
@@ -28,7 +28,7 @@ picoputer and picoputer-eclipse are the directories that build the picoputer cod
 ard-link-monitor.ino
 --------------------
 
-This program is for an Arduino Mega. I used a Mega embedded, but that was because i had one and it fits nicely on 0.1" perfboard. It's a standard Arduino program so should run on any Mega.
+This program is for an Arduino Mega. I used a Mega embedded, but that was because I had one and it fits nicely on 0.1" perfboard. It's a standard Arduino program so should run on any Mega.
 
 
 ardlink-server
